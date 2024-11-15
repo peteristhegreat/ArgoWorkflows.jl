@@ -1,3 +1,19 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Julia API client for ArgoWorkflows](#julia-api-client-for-argoworkflows)
+  - [Overview](#overview)
+  - [Installation](#installation)
+  - [API Endpoints](#api-endpoints)
+  - [Models](#models)
+  - [Authorization](#authorization)
+    - [BearerToken](#bearertoken)
+  - [Author](#author)
+- [ArgoWorkflows.jl](#argoworkflowsjl)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Julia API client for ArgoWorkflows
 
 Argo Workflows is an open source container-native workflow engine for orchestrating parallel jobs on Kubernetes. For more information, please see https://argo-workflows.readthedocs.io/en/latest/
@@ -497,12 +513,18 @@ Authentication schemes defined for the API:
 
 Example
 ```
-    using OpenAPI
-    using OpenAPI.Clients
-    import OpenAPI.Clients: Client
-    client = Client(server_uri)
-    api = MyApi(client)
-    result = callApi(api, args...; api_key)
+using ArgoWorkflows
+using ArgoWorkflows.Clients
+import ArgoWorkflows.Clients: Client
+
+client = Client("http://localhost:2746")
+api = ArgoWorkflows.WorkflowServiceApi(client)
+
+# List workflows in the "default" namespace
+response = ArgoWorkflows.workflow_service_list_workflows(api, "default")
+
+# Generally format for any of the other api endpoints
+result = callApi(api, args...; api_key)
 ```
 
 ## Author
